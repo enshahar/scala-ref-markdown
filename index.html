@@ -713,7 +713,7 @@ If $x$ references an abstract type member, then $T$ must be a
 <pre class="grammar"><code>SimpleType      ::=  SimpleType TypeArgs
 TypeArgs        ::=  ‘[’ Types ‘]’</code></pre>
 <p>A parameterized type <span class="math">\(T[ U_1 , \ldots , U_n ]\)</span> consists of a type designator <span class="math">\(T\)</span> and type parameters <span class="math">\(U_1 , \ldots , U_n\)</span> where <span class="math">\(n \geq 1\)</span>. <span class="math">\(T\)</span> must refer to a type constructor which takes <span class="math">\(n\)</span> type parameters <span class="math">\(a_1 , \ldots , a_n\)</span>.</p>
-<p>Say the type parameters have lower bounds <span class="math">\(L_1 , \ldots , L_n\)</span> and upper bounds <span class="math">\(U_1 ,  \ldots , U_n\)</span>. The parameterized type is well-formed if each actual type parameter <em>conforms to its bounds</em>, i.e. <span class="math">\(σ L_i &lt;: T_i &lt;: σ U_i\)</span> where <span class="math">\(σ\)</span> is the substitution <span class="math">\([ a_1 := T_1 , \ldots , a_n := T_n ]\)</span>.</p>
+<p>Say the type parameters have lower bounds <span class="math">\(L_1 , \ldots , L_n\)</span> and upper bounds <span class="math">\(U_1 ,  \ldots , U_n\)</span>. The parameterized type is well-formed if each actual type parameter <em>conforms to its bounds</em>, i.e. <span class="math">\(\sigma L_i &lt;: T_i &lt;: \sigma U_i\)</span> where <span class="math">\(\sigma\)</span> is the substitution <span class="math">\([ a_1 := T_1 , \ldots , a_n := T_n ]\)</span>.</p>
 <ol start="17" type="1">
 <li><p>Given the partial type definitions:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> TreeMap[A &lt;: Comparable[A], B] { … }
