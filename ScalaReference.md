@@ -153,7 +153,7 @@ var         while       with        yield
 _    :    =    =>    <-    <:    <%     >:    #    @
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Unicode operators \\u21D2 ‘⇒’ and \\u2190 ‘←’, which have the ASCII 
+The Unicode operators \\u21D2 ‘$\Rightarrow$’ and \\u2190 ‘$\leftarrow$’, which have the ASCII 
 equivalents ‘=>’ and ‘<-’, are also reserved.
 
 (@) Here are examples of identifiers:
@@ -466,10 +466,10 @@ members of type `Boolean`{.scala}.
 
 ### Character Literals
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ {.grammar}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ {.grammar}
 characterLiteral  ::=  ‘'’ printableChar ‘'’
                     |  ‘'’ charEscapeSeq ‘'’
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ {.grammar}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A character literal is a single character enclosed in quotes.
 The character is either a printable unicode character or is described
@@ -490,10 +490,10 @@ the octal escape `'\12'` ([see here](#escape-sequences)).
 
 ### String Literals
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ {.grammar}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ {.grammar}
 stringLiteral  ::=  ‘\"’ {stringElement} ‘\"’
 stringElement  ::=  printableCharNoDoubleQuote  |  charEscapeSeq
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A string literal is a sequence of characters in double quotes.  The
 characters are either printable unicode character or are described by
@@ -2033,7 +2033,7 @@ type $U$. If the type parameter clause `[$\mathit{tps}\,$]` is omitted, $t$ abst
 
 If a type declaration appears as a member declaration of a
 type, implementations of the type may implement $t$ with any type $T$
-for which $L \conforms T \conforms U$. It is a compile-time error if
+for which $L <: T <: U$. It is a compile-time error if
 $L$ does not conform to $U$.  Either or both bounds may be omitted.
 If the lower bound $L$ is absent, the bottom type
 `scala.Nothing` is assumed.  If the upper bound $U$ is absent,
@@ -2136,12 +2136,17 @@ constrain possible type arguments for the parameter.  It is a
 compile-time error if $L$ does not conform to $U$. $\pm$ is a _variance_, i.e.\ an optional prefix of either `+`, or
 `-`. One or more annotations may precede the type parameter.
 
-\comment{
+<!--
 The upper bound $U$ in a type parameter clauses may not be a final
-class. The lower bound may not denote a value type.\todo{Why}
-}
+class. The lower bound may not denote a value type.
 
-\comment{@M TODO this is a pretty awkward description of scoping and distinctness of binders}
+TODO: Why
+-->
+
+<!--
+TODO: this is a pretty awkward description of scoping and distinctness of binders
+-->
+
 The names of all type parameters must be pairwise different in their enclosing type parameter clause.  The scope of a type parameter includes in each case the whole type parameter clause. Therefore it is possible that a type parameter appears as part of its own bounds or the bounds of other type parameters in the same clause.  However, a type parameter may not be bounded directly or indirectly by itself.\
 
 A type constructor parameter adds a nested type parameter clause to the type parameter. The most general form of a type constructor parameter is `$@a_1\ldots@a_n$ $\pm$ $t[\mathit{tps}\,]$ >: $L$ <: $U$`.  
@@ -3551,7 +3556,7 @@ method is defined as follows:
 def copy[$\mathit{tps}\,$]($\mathit{ps}'_1\,$)$\ldots$($\mathit{ps}'_n$): $c$[$\mathit{tps}\,$] = new $c$[$\mathit{Ts}\,$]($\mathit{xs}_1\,$)$\ldots$($\mathit{xs}_n$)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Again, $\Ts$ stands for the vector of types defined in the type parameter section $\mathit{tps}$
+Again, $\mathit{Ts}$ stands for the vector of types defined in the type parameter section $\mathit{tps}$
 and each $\mathit{xs}_i$ denotes the parameter names of the parameter section $\mathit{ps}'_i$. Every value
 parameter $\mathit{ps}'_{i,j}$ of the `copy` method has the form `$x_{i,j}$:$T_{i,j}$=this.$x_{i,j}$`,
 where $x_{i,j}$ and $T_{i,j}$ refer to the name and type of the corresponding class parameter
@@ -4259,8 +4264,9 @@ SimpleExpr    ::=  SimpleExpr TypeArgs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A type application `$e$[$T_1 , \ldots , T_n$]` instantiates
-a polymorphic value $e$ of type ~\lstinline@[$a_1$ >: $L_1$ <: $U_1
-, \ldots , a_n$ >: $L_n$ <: $U_n$]$S$@~ with argument types
+a polymorphic value $e$ of type 
+`[$a_1$ >: $L_1$ <: $U_1, \ldots , a_n$ >: $L_n$ <: $U_n$]$S$` 
+with argument types
 `$T_1 , \ldots , T_n$`.  Every argument type $T_i$ must obey
 the corresponding bounds $L_i$ and $U_i$.  That is, for each $i = 1
 , \ldots , n$, we must have $\sigma L_i <: T_i <: \sigma
@@ -4426,8 +4432,6 @@ $e$, which defines the result of the block.
 Prefix, Infix, and Postfix Operations
 -------------------------------------
 
-\label{sec:infix-operations}
-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ {.grammar}
 PostfixExpr     ::=  InfixExpr [id [nl]]
 InfixExpr       ::=  PrefixExpr
@@ -4446,7 +4450,7 @@ must be one of the identifiers ‘`+`’, ‘`-`’,
 equivalent to the postfix method application
 `e.unary_$\mathit{op}$`.
 
-\todo{Generalize to arbitrary operators}
+<!-- TODO: Generalize to arbitrary operators -->
 
 Prefix operators are different from normal function applications in
 that their operand expression need not be atomic. For instance, the
@@ -4588,7 +4592,7 @@ Annotated Expressions
 Expr1              ::=  PostfixExpr `:' Annotation {Annotation} 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-An annotated expression ~\lstinline^$e$: @$a_1$ $\ldots$ @$a_n$^
+An annotated expression `$e$: @$a_1$ $\ldots$ @$a_n$`
 attaches [annotations](#user-defined-annotations) $a_1 , \ldots , a_n$ to the 
 expression $e$.
 
@@ -5123,7 +5127,7 @@ include at least the expressions of the following forms:
 - A class constructed with [`Predef.classOf`](#the-predef-object)
 - An element of an enumeration from the underlying platform
 - A literal array, of the form
-  \lstinline^Array$(c_1 , \ldots , c_n)$^,
+  `Array$(c_1 , \ldots , c_n)$`,
   where all of the $c_i$'s are themselves constant expressions
 - An identifier defined by a 
   [constant value definition](#value-declarations-and-definitions).
@@ -5151,7 +5155,8 @@ Statements used in the template of a class definition can also be
 declarations.  An expression that is used as a statement can have an
 arbitrary value type. An expression statement $e$ is evaluated by
 evaluating $e$ and discarding the result of the evaluation. 
-\todo{Generalize to implicit coercion?}
+
+<!-- Generalize to implicit coercion? -->
 
 Block statements may be definitions which bind local names in the
 block. The only modifier allowed in all block-local definitions is
@@ -5165,8 +5170,6 @@ statements in the order they are written.
 
 Implicit Conversions
 --------------------
-
-\label{sec:impl-conv}
 
 Implicit conversions can be applied to expressions whose type does not
 match their expected type, to qualifiers in selections, and to unapplied methods. The
@@ -5247,7 +5250,7 @@ _Implicit Application_ \
 _Eta Expansion_ \
   Otherwise, if the method is not a constructor, 
   and the expected type $\mathit{pt}$ is a function type
-  $(\mathit{Ts}') \Arrow T'$, [eta-expansion](#eta-expansion)
+  $(\mathit{Ts}') \Rightarrow T'$, [eta-expansion](#eta-expansion)
   is performed on the expression $e$.
 
 _Empty Application_ \
@@ -5460,10 +5463,7 @@ solutions exist, an optimal one for the type $T'$ is chosen.
 All or parts of an expected type $\mathit{pt}$ may be undefined. The rules for
 [conformance](#conformance) are extended to this case by adding
 the rule that for any type $T$ the following two statements are always
-true:
-\[
-   \mbox{\sl undefined} <: T \tab\mbox{and}\tab T <: \mbox{\sl undefined} .
-\]
+true: $\mathit{undefined} <: T$ and $T <: \mathit{undefined}$
 
 It is possible that no minimal or maximal solution for a type variable
 exists, in which case a compile-time error results. Because $<:$ is a
@@ -6138,7 +6138,7 @@ that value.
   Pattern2        ::=  varid `@' Pattern3
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A pattern binder \lstinline|$x$@$p$| consists of a pattern variable $x$ and a 
+A pattern binder `$x$@$p$` consists of a pattern variable $x$ and a 
 pattern $p$. The type of the variable $x$ is the static type $T$ of the pattern $p$.
 This pattern matches any value $v$ matched by the pattern $p$, 
 provided the run-time type of $v$ is also an instance of $T$, 
@@ -6225,8 +6225,8 @@ repeated parameter. This is further discussed [here](#pattern-sequences).
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A tuple pattern `($p_1 , \ldots , p_n$)` is an alias
-for the constructor pattern ~\lstinline@scala.Tuple$n$($p_1 , \ldots ,
-p_n$)@, where $n \geq 2$. The empty tuple
+for the constructor pattern `scala.Tuple$n$($p_1 , \ldots , p_n$)`, 
+where $n \geq 2$. The empty tuple
 `()`{.scala} is the unique value of type `scala.Unit`{.scala}.
 
 ### Extractor Patterns
@@ -6355,14 +6355,14 @@ Regular expression patterns have been discontinued in Scala from version 2.0.
 Later version of Scala provide a much simplified version of regular
 expression patterns that cover most scenarios of non-text sequence
 processing.  A _sequence pattern_ is a pattern that stands in a
-position where either (1) a pattern of a type \lstinline+T+ which is
+position where either (1) a pattern of a type `T` which is
 conforming to
-\lstinline+Seq[A]+ for some \lstinline+A+ is expected, or (2) a case
+`Seq[A]` for some `A` is expected, or (2) a case
 class constructor that has an iterated formal parameter
-\lstinline+A*+.  A wildcard star pattern \lstinline+_*+ in the
+`A*`.  A wildcard star pattern `_*` in the
 rightmost position stands for arbitrary long sequences. It can be
-bound to variables using \lstinline+@+, as usual, in which case the variable will have the
-type \lstinline+Seq[A]+.
+bound to variables using `@`, as usual, in which case the variable will have the
+type `Seq[A]`.
 
 ### Irrefutable Patterns
 
@@ -6452,10 +6452,10 @@ type parameters $a'_1 , \ldots , a'_n$ with lower bounds $L_1
 , \ldots , L_n$ and upper bounds $U_1 , \ldots , U_n$, $\mathcal{C}_0$
 contains the constraints 
 
-$$\begin{array}
-a_i        &<:& \sigma U_i & (i = 1, \ldots , n)  \\ 
-\sigma L_i &<:& a_i        & (i = 1 , \ldots , n)
-\end{array}$$
+-------------  ------  --------------  ------------------------
+$a_i$          $<:$    $\sigma U_i$    $(i = 1, \ldots , n)$
+$\sigma L_i$   $<:$    $a_i$           $(i = 1 , \ldots , n)$
+-------------  ------  --------------  ------------------------
 
 where $\sigma$ is the substitution $[a'_1 := a_1 , \ldots , a'_n :=
 a_n]$.
@@ -7222,7 +7222,7 @@ Java platform, the following annotations have a standard meaning.
 	the generated getter method is named `isX` instead of `getX`.
 
   * `@unchecked` \
-	When applied to the selector of a \lstinline@match@ expression,
+	When applied to the selector of a `match` expression,
 	this attribute suppresses any warnings about non-exhaustive pattern
 	matches which would otherwise be emitted. For instance, no warnings
 	would be produced for the method definition below.
@@ -7307,7 +7307,7 @@ The Scala standard library consists of the package `scala` with a
 number of classes and modules. Some of these classes are described in
 the following.
 
-![Class hierarchy of Scala](classhierarchy.pdf)
+![Class hierarchy of Scala](resources/classhierarchy.pdf)
 
 
 Root Classes
@@ -7403,7 +7403,7 @@ $x$ match {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 where the type $T'$ is the same as $T$ except if $T$ is
-of the form $D$ or $D[\tps]$ where $D$ is a type member of some outer
+of the form $D$ or $D[\mathit{tps}]$ where $D$ is a type member of some outer
 class $C$. In this case $T'$ is `$C$#$D$` (or
 `$C$#$D[tps]$`, respectively), whereas $T$ itself would
 expand to `$C$.this.$D[tps]$`. In other words, an
