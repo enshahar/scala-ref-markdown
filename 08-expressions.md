@@ -88,19 +88,18 @@ The _Null_ Value
 
 The `null` value is of type `scala.Null`, and is thus
 compatible with every reference type.  It denotes a reference value
-which refers to a special “`null`” object. This object
+which refers to a special `null` object. This object
 implements methods in class `scala.AnyRef` as follows:
 
 - `eq($x\,$)` and `==($x\,$)` return `true` iff the
-  argument $x$ is also the ``null'' object.
+  argument $x$ is also the `null` object.
 - `ne($x\,$)` and `!=($x\,$)` return true iff the 
-  argument x is not also the ``null'' object.
+  argument x is not also the `null` object.
 - `isInstanceOf[$T\,$]` always returns `false`.
-- `asInstanceOf[$T\,$]` returns the ``null'' object itself if
-  $T$ conforms to `scala.AnyRef`, and throws a
-  `NullPointerException` otherwise.
+- `asInstanceOf[$T\,$]` returns the
+  [default value](#variable-declarations-and-definitions) of type `T`.
 
-A reference to any other member of the ``null'' object causes a
+A reference to any other member of the `null` object causes a
 `NullPointerException` to be thrown. 
 
 
