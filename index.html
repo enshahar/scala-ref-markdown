@@ -56,6 +56,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
     <link rel="stylesheet" href="resources/blueprint-ie.css" type="text/css" media="screen, projection">
   <![endif]-->
   <link rel="stylesheet" href="resources/style.css" type="text/css" media="screen, projection"/>
+  <link rel="stylesheet" href="resources/fonts.css" type="text/css" media="screen, projection"/>
 
 </head>
 <body>
@@ -336,16 +337,16 @@ with    yield    ,    .    ;    :    =    =&gt;    &lt;-    &lt;:    &lt;%
 <p>The Scala grammar (given in full <a href="#scala-syntax-summary">here</a>) contains productions where optional <code>nl</code> tokens, but not semicolons, are accepted. This has the effect that a newline in one of these positions does not terminate an expression or statement. These positions can be summarized as follows:</p>
 <p>Multiple newline tokens are accepted in the following places (note that a semicolon in place of the newline would be illegal in every one of these cases):</p>
 <ul>
-<li>between the condition of an conditional expression (<a href="#conditional-expressions">here</a>) or while loop (<a href="#while-loop-expressions">here</a>) and the next following expression,</li>
-<li>between the enumerators of a for-comprehension (<a href="#for-comprehensions-and-for-loops">here</a>) and the next following expression, and</li>
-<li>after the initial <code class="sourceCode scala"><span class="kw">type</span></code> keyword in a type definition or declaration (<a href="#type-declarations-and-type-aliases">here</a>).</li>
+<li>between the condition of a <a href="#conditional-expressions">conditional expression</a> or <a href="#while-loop-expressions">while loop</a> and the next following expression,</li>
+<li>between the enumerators of a <a href="#for-comprehensions-and-for-loops">for-comprehension</a> and the next following expression, and</li>
+<li>after the initial <code class="sourceCode scala"><span class="kw">type</span></code> keyword in a <a href="#type-declarations-and-type-aliases">type definition or declaration</a>.</li>
 </ul>
 <p>A single new line token is accepted</p>
 <ul>
 <li>in front of an opening brace ‘{’, if that brace is a legal continuation of the current statement or expression,</li>
-<li>after an infix operator, if the first token on the next line can start an expression (<a href="#prefix-infix-and-postfix-operations">here</a>),</li>
-<li>in front of a parameter clause (<a href="#function-declarations-and-definitions">here</a>), and</li>
-<li>after an annotation (<a href="#user-defined-annotations">here</a>).</li>
+<li>after an <a href="#prefix-infix-and-postfix-operations">infix operator</a>, if the first token on the next line can start an expression,</li>
+<li>in front of a <a href="#function-declarations-and-definitions">parameter clause</a>, and</li>
+<li>after an <a href="#user-defined-annotations">annotation</a>.</li>
 </ul>
 <ol start="3" type="1">
 <li><p>The following code contains four well-formed statements, each on two lines. The newline tokens between the two lines are not treated as statement separators.</p>
@@ -412,7 +413,8 @@ with    yield    ,    .    ;    :    =    =&gt;    &lt;-    &lt;:    &lt;%
            |  symbolLiteral
            |  ‘null’</code></pre>
 <h3 id="integer-literals"><a href="#integer-literals"><span class="header-section-number">1.3.1</span> Integer Literals</a></h3>
-<pre class="grammar"><code>integerLiteral  ::=  (decimalNumeral | hexNumeral | octalNumeral) [‘L’ | ‘l’]
+<pre class="grammar"><code>integerLiteral  ::=  (decimalNumeral | hexNumeral | octalNumeral) 
+                       [‘L’ | ‘l’]
 decimalNumeral  ::=  ‘0’ | nonZeroDigit {digit}
 hexNumeral      ::=  ‘0’ ‘x’ hexDigit {hexDigit}
 octalNumeral    ::=  ‘0’ octalDigit {octalDigit}
