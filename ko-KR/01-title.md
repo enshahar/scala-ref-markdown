@@ -1,4 +1,4 @@
-% The Scala Language Specification, Version 2.9
+% 스칼라 언어 명세, 버전 2.9
 % Martin Odersky;
   Philippe Altherr;
   Vincent Cremet;
@@ -10,5 +10,5 @@
   Michel Schinz;
   Erik Stenman;
   Matthias Zenger
-% 24th May 2011
+% 2011년 5월 24일
 
