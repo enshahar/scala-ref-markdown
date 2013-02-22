@@ -1,8 +1,10 @@
-Lexical Syntax
+구문 문법
 ==============
 
-Scala programs are written using the Unicode Basic Multilingual Plane
-(_BMP_) character set; Unicode supplementary characters are not
+스칼라 프로그램은 유니코드 기본 다국어 플레인(Unicode Basic Multilingual Plane, _BMP_) 문자 
+집합을 사용해 작성된다. 유니코드 부가 문자들은 현재 지원되지 않는다. 
+
+character set; Unicode supplementary characters are not
 presently supported.  This chapter defines the two modes of Scala's
 lexical syntax, the Scala mode and the _XML_ mode. If not
 otherwise mentioned, the following descriptions of Scala tokens refer
