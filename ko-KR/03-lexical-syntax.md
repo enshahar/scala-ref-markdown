@@ -1,42 +1,39 @@
 구문 문법
 ==============
 
-스칼라 프로그램은 유니코드 기본 다국어 플레인(Unicode Basic Multilingual Plane, _BMP_) 문자 
-집합을 사용해 작성된다. 유니코드 부가 문자들은 현재 지원되지 않는다. 
+스칼라 프로그램은 유니코드 기본 다국어 플레인(Unicode Basic 
+Multilingual Plane, _BMP_) 문자 집합을 사용해 작성된다. 유니코드 
+부가 문자들은 현재 지원되지 않는다. 이번장에서는 스칼라가 현재 
+지원하는 두 구문문법에 대해 정의한다. 그 둘은 스칼라 모드와 _XML_ 
+모드이다. 따로 언급하지 않는다면 다음에 설명하는 스칼라 토큰들은 
+스칼라 모드에만 해당된다. 또한 리터럴 문자 `c'는 아스키 부분인 
+\\u0000-\\u007F를 의미한다.
 
-character set; Unicode supplementary characters are not
-presently supported.  This chapter defines the two modes of Scala's
-lexical syntax, the Scala mode and the _XML_ mode. If not
-otherwise mentioned, the following descriptions of Scala tokens refer
-to Scala mode, and literal characters ‘c’ refer to the ASCII fragment
-\\u0000-\\u007F
-
-In Scala mode, _Unicode escapes_ are replaced by the corresponding
-Unicode character with the given hexadecimal code.
+스칼라 모드에서, _유니코드 이스케이프(Unicode escapes)_ 는 주어진 16진 코드에 대응되는 
+유니코드 문자로 치환된다.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ {.grammar}
 UnicodeEscape ::= \{\\}u{u} hexDigit hexDigit hexDigit hexDigit
 hexDigit      ::= ‘0’ | … | ‘9’ | ‘A’ | … | ‘F’ | ‘a’ | … | ‘f’
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To construct tokens, characters are distinguished according to the following 
-classes (Unicode general category given in parentheses):
+토큰을 만들 때 문자는 다음과 같은 종류로 구별된다(유니코드 일반 카테고리는 괄호 
+안에 표시했다). 
 
-#. Whitespace characters. `\u0020 | \u0009 | \u000D | \u000A`{.grammar}
-#. Letters, which include lower case letters(Ll), upper case letters(Lu), 
-   titlecase letters(Lt), other letters(Lo), letter numerals(Nl) and the 
-   two characters \\u0024 ‘\\$’ and \\u005F ‘_’, which both count as upper case 
-   letters
-#. Digits ` ‘0’ | … | ‘9’ `{.grammar}
-#. Parentheses ` ‘(’ | ‘)’ | ‘[’ | ‘]’ | ‘{’ | ‘}’ `{.grammar}
-#. Delimiter characters `` ‘`’ | ‘'’ | ‘"’ | ‘.’ | ‘;’ | ‘,’ ``{.grammar}
-#. Operator characters. These consist of all printable ASCII characters 
-   \\u0020-\\u007F which are in none of the sets above, mathematical symbols(Sm) 
-   and other symbols(So).
+#. 공백문자(Whitespace characters). `\u0020 | \u0009 | \u000D | \u000A`{.grammar}
+#. 문자. 소문자(lower case letters, Ll), 대문자(upper case letters, Lu), 
+   타이틀케이스 문자(titlecase letters, Lt), 다른 문자(Lo), 순자 문자(letter numerals, Nl),
+   그리고 대문자로 취급되는 두 문자 \\u0024 ‘\\$’ 와 \\u005F ‘_’.
+#. 숫자들(Digits) ` ‘0’ | … | ‘9’ `{.grammar}
+#. 괄호들(Parentheses) ` ‘(’ | ‘)’ | ‘[’ | ‘]’ | ‘{’ | ‘}’ `{.grammar}
+#. 구분 문자들(Delimiter characters) `` ‘`’ | ‘'’ | ‘"’ | ‘.’ | ‘;’ | ‘,’ ``{.grammar}
+#. 연산자 문자들(Operator characters). \\u0020-\\u007F 에 속한 모든 화면표시 가능한 문자 중에,
+   위에 정의한 집합에 속하지 않는 문자들과 수학기호(mathematical symbols, Sm) 및 기타기호(other 
+   symbols, So).
 
 \pagebreak[1]
 
-Identifiers
+식별자(Identifiers)
 -----------
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ {.grammar}
@@ -50,35 +47,30 @@ id       ::=  plainid
 idrest   ::=  {letter | digit} [‘_’ op]
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are three ways to form an identifier. First, an identifier can
-start with a letter which can be followed by an arbitrary sequence of
-letters and digits. This may be followed by underscore ‘_’
-characters and another string composed of either letters and digits or
-of operator characters.  Second, an identifier can start with an operator 
-character followed by an arbitrary sequence of operator characters.
-The preceding two forms are called _plain_ identifiers.  Finally,
-an identifier may also be formed by an arbitrary string between
-back-quotes (host systems may impose some restrictions on which
-strings are legal for identifiers).  The identifier then is composed
-of all characters excluding the backquotes themselves.
+식별자를 만드는 방법은 세가지가 있다. 우선, 문자로 시작하고 그 뒤에 
+임의의 문자와 숫자가 연속해서 따라오면 이를 식별자로 취급한다. `_' 다음에 
+임의의 숫자나 문자가 연속해서 와도 식별자이다. 두번째로, 연산자 문자 뒤에 
+임의의 연산자 문자가 연속해서 오는 경우도 식별자이다. 이 두가지를 일컬어 
+_보통(plain)_ 식별자라 한다. 마지막으로 두 역따옴표(back-quotes) 
+사이에 임의의 문자열이 있는 경우도 식별자이다. (호스트 시스템에 따라 
+사용 가능한 문자열에는 제한이 있을 수 있다.) 이 경우 식별자는 역따옴표는 
+제외한 나머지 문자열로 구성된다.
  
-As usual, a longest match rule applies. For instance, the string
+보통 가장 긴 매치 규칙이 사용된다. 예들 들어 다음을 보자.
 
 ~~~~~~~~~~~~~~~~ {.scala}
 big_bob++=`def`
 ~~~~~~~~~~~~~~~~
 
-decomposes into the three identifiers `big_bob`, `++=`, and
-`def`. The rules for pattern matching further distinguish between
-_variable identifiers_, which start with a lower case letter, and
-_constant identifiers_, which do not.
+위 문장은 세 식별자 `big_bob`, `++=`, `def`로 구분된다. 패턴 매치를 위한 
+추가 규칙은 소문자로 시작하는 _변수 식별자_ 와 그렇지 않은 _상수 식별자_ 를 
+구분한다. 
 
-The ‘\$’ character is reserved
-for compiler-synthesized identifiers.  User programs should not define
-identifiers which contain ‘\$’ characters.
+‘\$’문자는 컴파일러가 만든 식별자를 위해 예약되어 있다. 사용자 프로그램에서는 
+‘\$’ 문자를 포함한 식별자를사용해서는 안된다. 
 
-The following names are reserved words instead of being members of the
-syntactic class `id` of lexical identifiers.
+다음 이름들은 별도로 예약되어 있으며,식별자의 집합인 문법 클래스 `id`에 
+포함되지 않는다.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 abstract    case        catch       class       def
@@ -92,10 +84,10 @@ var         while       with        yield
 _    :    =    =>    <-    <:    <%     >:    #    @
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Unicode operators \\u21D2 ‘$\Rightarrow$’ and \\u2190 ‘$\leftarrow$’, which have the ASCII 
-equivalents ‘=>’ and ‘<-’, are also reserved.
+유니코드 연산자 \\u21D2 ‘$\Rightarrow$’와 \\u2190 ‘$\leftarrow$’는 각각 아스키 
+문자열 ‘=>’와 ‘<-’과 동일하며, 예약어이다.
 
-(@) Here are examples of identifiers:
+(@) 다음은 식별자의 예이다:
 
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         x         Object        maxIndex   p2p      empty_?
@@ -103,11 +95,10 @@ equivalents ‘=>’ and ‘<-’, are also reserved.
         __system  _MAX_LEN_     
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(@) Backquote-enclosed strings are a solution when one needs to
-    access Java identifiers that are reserved words in Scala. For
-    instance, the statement `Thread.yield()` is illegal, since
-    `yield` is a reserved word in Scala. However, here's a
-    work-around: `` Thread.`yield`() ``{.scala}
+(@) 역따옴표로 둘러싼 문자열은 스칼라에서 예약어인 자바 식별자를 
+    사용해야 하는 경우를 위한 해결책이다. 예를 들어 `Thread.yield()`는 
+    스칼라에서 `yield`가 예약어라서 사용할 수 없는 식이다. 하지만, 
+    `` Thread.`yield`() ``{.scala} 과 같은 형태로는 사용할 수 있다.
 
 
 Newline Characters
